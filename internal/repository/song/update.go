@@ -2,8 +2,6 @@ package song
 
 import (
 	"context"
-	"database/sql"
-	"errors"
 	"time"
 
 	sq "github.com/Masterminds/squirrel"
@@ -45,12 +43,12 @@ func (r *repo) Update(ctx context.Context, id int64, song *model.SongUpdate) err
 	}
 	logger.Debug("sql query", zap.String("query name", q.Name), zap.String("query raw", q.QueryRaw), zap.Any("args", args))
 
-	_, err = r.db.DB().ExecContext(ctx, q, args...)
+	result, err := r.db.DB().ExecContext(ctx, q, args...)
 	if err != nil {
 		return err
 	}
 
-	if errors.Is(err, sql.ErrNoRows) {
+	if result.RowsAffected() == 0 {
 		return service.ErrSongNotFound
 	}
 	return nil

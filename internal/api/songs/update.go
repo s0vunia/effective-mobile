@@ -78,6 +78,9 @@ func (i *Implementation) Update(c echo.Context) error {
 		if errors.Is(err, service.ErrGroupNotFound) {
 			return api.ErrGroupNotFound
 		}
+		if errors.Is(err, service.ErrSongNotFound) {
+			return api.ErrSongNotFound
+		}
 		return api.ErrInternal
 	}
 
