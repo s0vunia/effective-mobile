@@ -12,7 +12,7 @@ cd effective-mobile
 
 2. Создайте файл `.env` на основе `.env.dist`:
 ```bash
-cp .env.dist .env
+cp env.dist .env
 ```
 
 3. Запустите проект через Makefile или DockerCompose:
