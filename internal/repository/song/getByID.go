@@ -6,11 +6,13 @@ import (
 
 	sq "github.com/Masterminds/squirrel"
 	"github.com/jackc/pgx/v4"
+	"github.com/s0vunia/effective-mobile/internal/logger"
 	"github.com/s0vunia/effective-mobile/internal/model"
 	"github.com/s0vunia/effective-mobile/internal/repository/song/converter"
 	repository "github.com/s0vunia/effective-mobile/internal/repository/song/model"
 	"github.com/s0vunia/effective-mobile/internal/service"
 	"github.com/s0vunia/platform_common/pkg/db"
+	"go.uber.org/zap"
 )
 
 func (r *repo) GetByID(ctx context.Context, id int64) (*model.Song, error) {
@@ -27,6 +29,8 @@ func (r *repo) GetByID(ctx context.Context, id int64) (*model.Song, error) {
 		Name:     "song_repository.GetByID",
 		QueryRaw: query,
 	}
+	logger.Debug("sql query", zap.String("query name", q.Name), zap.String("query raw", q.QueryRaw), zap.Any("args", args))
+
 	var song repository.Song
 	err = r.db.DB().ScanOneContext(ctx, &song, q, args...)
 	if err != nil {

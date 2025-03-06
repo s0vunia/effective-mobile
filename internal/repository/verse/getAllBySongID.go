@@ -4,8 +4,10 @@ import (
 	"context"
 
 	sq "github.com/Masterminds/squirrel"
+	"github.com/s0vunia/effective-mobile/internal/logger"
 	"github.com/s0vunia/effective-mobile/internal/model"
 	"github.com/s0vunia/platform_common/pkg/db"
+	"go.uber.org/zap"
 )
 
 func (r *repo) GetAllBySongID(ctx context.Context, songID int64, limit, offset int) ([]model.Verse, int, error) {
@@ -37,6 +39,8 @@ func (r *repo) GetAllBySongID(ctx context.Context, songID int64, limit, offset i
 		Name:     "verse_repository.GetAllBySongID.Count",
 		QueryRaw: countQuery,
 	}
+	logger.Debug("sql query", zap.String("query name", q.Name), zap.String("query raw", q.QueryRaw), zap.Any("args", countArgs))
+
 	err = r.db.DB().ScanOneContext(ctx, &total, q, countArgs...)
 	if err != nil {
 		return nil, 0, err
@@ -55,6 +59,7 @@ func (r *repo) GetAllBySongID(ctx context.Context, songID int64, limit, offset i
 		Name:     "verse_repository.GetAllBySongID",
 		QueryRaw: query,
 	}
+	logger.Debug("sql query", zap.String("query name", q.Name), zap.String("query raw", q.QueryRaw), zap.Any("args", args))
 
 	var verses []model.Verse
 	err = r.db.DB().ScanAllContext(ctx, &verses, q, args...)
