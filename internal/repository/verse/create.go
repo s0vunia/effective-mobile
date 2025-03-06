@@ -40,3 +40,35 @@ func (r *repo) Create(ctx context.Context, verse *model.Verse) (int64, error) {
 	}
 	return id, nil
 }
+
+func (r *repo) CreateBatch(ctx context.Context, verses []model.Verse) ([]int64, error) {
+	if len(verses) == 0 {
+		return nil, nil
+	}
+
+	builder := sq.Insert(tableName).
+		Columns(songIDColumn, verseNumColumn, textColumn).
+		PlaceholderFormat(sq.Dollar)
+
+	for _, verse := range verses {
+		builder = builder.Values(verse.SongID, verse.VerseNumber, verse.Text)
+	}
+
+	query, args, err := builder.Suffix("RETURNING id").ToSql()
+	if err != nil {
+		return nil, err
+	}
+
+	q := db.Query{
+		Name:     "verse_repository.Create",
+		QueryRaw: query,
+	}
+
+	var ids []int64
+	err = r.db.DB().ScanAllContext(ctx, &ids, q, args...)
+	if err != nil {
+		return nil, err
+	}
+
+	return ids, nil
+}

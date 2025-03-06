@@ -25,16 +25,19 @@ func (s serv) Add(ctx context.Context, song model.SongCreate) (int64, error) {
 		return 0, err
 	}
 
+	versesToCreate := make([]model.Verse, 0, len(song.Verses))
 	for _, verse := range song.Verses {
-		verseToCreate := &model.Verse{
+		verseToCreate := model.Verse{
 			SongID:      songID,
 			VerseNumber: verse.VerseNumber,
 			Text:        verse.Text,
 		}
-		_, err = s.verseRepository.Create(ctx, verseToCreate)
-		if err != nil {
-			return 0, fmt.Errorf("failed to create verse: %w", err)
-		}
+		versesToCreate = append(versesToCreate, verseToCreate)
+	}
+
+	_, err = s.verseRepository.CreateBatch(ctx, versesToCreate)
+	if err != nil {
+		return 0, err
 	}
 
 	return songID, nil

@@ -26,6 +26,7 @@ type VerseRepository interface {
 	GetByID(ctx context.Context, id int64) (*model.Verse, error)
 	GetAllBySongID(ctx context.Context, songID int64, limit, offset int) ([]model.Verse, int, error)
 	Create(ctx context.Context, verse *model.Verse) (int64, error)
+	CreateBatch(ctx context.Context, verses []model.Verse) ([]int64, error)
 	Update(ctx context.Context, verse *model.Verse) error
 	Delete(ctx context.Context, id int64) error
 }
