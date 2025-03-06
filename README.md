@@ -30,6 +30,7 @@ docker compose up --build -d
 - Go 1.23, Echo
 - PostgreSQL с Goose для миграций
 - Структурированное логирование с помощью Zap
+- Swag для генерации Swagger-документации
 - Makefile для упрощения команд
 - **Дополнительно**:
    - golangci-lint для статического анализа
