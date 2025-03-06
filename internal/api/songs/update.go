@@ -28,15 +28,19 @@ import (
 // @Failure 500 {object} api.Error "Внутренняя ошибка сервера"
 // @Router /songs/{id} [put]
 func (i *Implementation) Update(c echo.Context) error {
-	logger.Info("Update song request")
+	logger.Debug("Update song request received")
 
 	songID, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
+		logger.Error("Invalid song ID", zap.Error(err))
 		return api.ErrInvalidRequest
 	}
 
+	logger.Debug("Updating song with ID", zap.Int64("id", songID))
+
 	var req dto.UpdateSongRequest
 	if err := c.Bind(&req); err != nil {
+		logger.Error("Failed to bind request", zap.Error(err))
 		return api.ErrInvalidRequest
 	}
 

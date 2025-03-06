@@ -27,6 +27,7 @@ import (
 // @Failure 500 {object} api.Error
 // @Router /songs [get]
 func (i *Implementation) Library(c echo.Context) error {
+	logger.Debug("Library request received")
 	var params dto.LibraryParams
 	if err := c.Bind(&params); err != nil {
 		return api.ErrInvalidRequest
@@ -47,6 +48,8 @@ func (i *Implementation) Library(c echo.Context) error {
 		Limit:  params.Limit,
 		Offset: params.Offset,
 	})
+	logger.Debug("Got songs", zap.Any("songs", songs), zap.Int("total", total), zap.Int("limit", params.Limit), zap.Int("offset", params.Offset))
+
 	if err != nil {
 		logger.Error("Failed to get songs", zap.Error(err))
 		return api.ErrInternal

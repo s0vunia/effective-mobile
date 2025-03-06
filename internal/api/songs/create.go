@@ -26,14 +26,18 @@ import (
 // @Failure 500 {object} api.Error "Внутренняя ошибка сервера"
 // @Router /songs [post]
 func (i *Implementation) Create(c echo.Context) error {
-	logger.Info("Create song request")
+	logger.Debug("Create song request received")
 
 	var req dto.CreateSongRequest
 	if err := c.Bind(&req); err != nil {
+		logger.Error("Failed to bind request", zap.Error(err))
 		return api.ErrInvalidRequest
 	}
 
+	logger.Debug("Request parameters", zap.Any("params", req))
+
 	if err := c.Validate(&req); err != nil {
+		logger.Error("Validation failed", zap.Error(err))
 		return api.ErrInvalidRequest
 	}
 

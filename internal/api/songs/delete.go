@@ -25,6 +25,7 @@ import (
 // @Failure 500 {object} api.Error "Внутренняя ошибка сервера"
 // @Router /songs/{id} [delete]
 func (i *Implementation) Delete(c echo.Context) error {
+	logger.Debug("Deleting song request received")
 	songID, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
 		return api.ErrInvalidRequest

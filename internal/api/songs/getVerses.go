@@ -30,6 +30,7 @@ import (
 // @Failure 500 {object} api.Error "Внутренняя ошибка сервера"
 // @Router /songs/{id}/verses [get]
 func (i *Implementation) GetVerses(c echo.Context) error {
+	logger.Debug("GetVerses song request received")
 	songID, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
 		return api.ErrInvalidRequest
@@ -52,6 +53,8 @@ func (i *Implementation) GetVerses(c echo.Context) error {
 		Limit:  params.Limit,
 		Offset: params.Offset,
 	})
+	logger.Debug("Got verses", zap.Any("verses", verses), zap.Int("total", total), zap.Int("limit", params.Limit), zap.Int("offset", params.Offset))
+
 	if err != nil {
 		logger.Error("Failed to get verses", zap.Error(err))
 		switch {
