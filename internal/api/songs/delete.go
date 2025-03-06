@@ -19,7 +19,7 @@ import (
 // @Accept json
 // @Produce json
 // @Param id path int true "ID песни"
-// @Success 204
+// @Success 200
 // @Failure 400 {object} api.Error "Неверный запрос"
 // @Failure 404 {object} api.Error "Песня не найдена"
 // @Failure 500 {object} api.Error "Внутренняя ошибка сервера"
