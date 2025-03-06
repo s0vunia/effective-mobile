@@ -19,10 +19,13 @@ type UpdateSongRequest struct {
 }
 
 type LibraryParams struct {
-	Group  string `query:"group"`
-	Song   string `query:"song"`
-	Limit  int    `query:"limit" validate:"omitempty,min=1,max=100"`
-	Offset int    `query:"offset" validate:"omitempty,min=0"`
+	Group       string `query:"group"`
+	Song        string `query:"song"`
+	ReleaseDate string `query:"release_date"`
+	Link        string `query:"link"`
+	Verse       string `query:"verse"`
+	Limit       int    `query:"limit" validate:"omitempty,min=1,max=100"`
+	Offset      int    `query:"offset" validate:"omitempty,min=0"`
 }
 
 type LibraryResponse struct {

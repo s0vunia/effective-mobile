@@ -27,10 +27,19 @@ func (r *repo) GetAll(ctx context.Context, filter model.SongFilter, limit, offse
 	builder = builder.Join("groups ON songs.group_id = groups.id")
 
 	if filter.Group != "" {
-		builder = builder.Where(sq.Like{"groups.name": "%" + filter.Group + "%"})
+		builder = builder.Where(sq.ILike{"groups.name": "%" + filter.Group + "%"})
 	}
 	if filter.Song != "" {
-		builder = builder.Where(sq.Like{"songs." + titleColumn: "%" + filter.Song + "%"})
+		builder = builder.Where(sq.ILike{"songs." + titleColumn: "%" + filter.Song + "%"})
+	}
+	if !filter.ReleaseDate.IsZero() {
+		builder = builder.Where(sq.Eq{"songs." + releaseDate: filter.ReleaseDate})
+	}
+	if filter.Link != "" {
+		builder = builder.Where(sq.ILike{"songs." + linkColumn: "%" + filter.Link + "%"})
+	}
+	if filter.Verse != "" {
+		builder = builder.Where(sq.Expr("EXISTS (SELECT 1 FROM verses WHERE verses.song_id = songs.id AND verses.text ILIKE ?)", "%"+filter.Verse+"%"))
 	}
 
 	countBuilder := sq.Select("COUNT(DISTINCT songs.id)").
@@ -39,10 +48,19 @@ func (r *repo) GetAll(ctx context.Context, filter model.SongFilter, limit, offse
 		Join("groups ON songs.group_id = groups.id")
 
 	if filter.Group != "" {
-		countBuilder = countBuilder.Where(sq.Like{"groups.name": "%" + filter.Group + "%"})
+		countBuilder = countBuilder.Where(sq.ILike{"groups.name": "%" + filter.Group + "%"})
 	}
 	if filter.Song != "" {
-		countBuilder = countBuilder.Where(sq.Like{"songs." + titleColumn: "%" + filter.Song + "%"})
+		countBuilder = countBuilder.Where(sq.ILike{"songs." + titleColumn: "%" + filter.Song + "%"})
+	}
+	if !filter.ReleaseDate.IsZero() {
+		countBuilder = countBuilder.Where(sq.Eq{"songs." + releaseDate: filter.ReleaseDate})
+	}
+	if filter.Link != "" {
+		countBuilder = countBuilder.Where(sq.ILike{"songs." + linkColumn: "%" + filter.Link + "%"})
+	}
+	if filter.Verse != "" {
+		countBuilder = countBuilder.Where(sq.Expr("EXISTS (SELECT 1 FROM verses WHERE verses.song_id = songs.id AND verses.text ILIKE ?)", "%"+filter.Verse+"%"))
 	}
 
 	countQuery, countArgs, err := countBuilder.ToSql()

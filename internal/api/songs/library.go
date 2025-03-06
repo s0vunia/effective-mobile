@@ -2,6 +2,7 @@ package songs
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/labstack/echo/v4"
 	"github.com/s0vunia/effective-mobile/internal/api"
@@ -20,6 +21,9 @@ import (
 // @Produce json
 // @Param group query string false "Фильтр по названию группы"
 // @Param song query string false "Фильтр по названию песни"
+// @Param release_date query string false "Фильтр по дате выпуска"
+// @Param link query string false "Фильтр по ссылке"
+// @Param verse query string false "Фильтр по куплету"
 // @Param limit query int false "Количество записей на странице (по умолчанию 10)"
 // @Param offset query int false "Смещение (по умолчанию 0)"
 // @Success 200 {object} dto.LibraryResponse
@@ -41,9 +45,23 @@ func (i *Implementation) Library(c echo.Context) error {
 		params.Limit = 10
 	}
 
+	var releaseDate time.Time
+	var err error
+
+	if params.ReleaseDate != "" {
+		releaseDate, err = time.Parse("2006-01-02", params.ReleaseDate)
+		if err != nil {
+			logger.Error("Invalid release date format", zap.Error(err))
+			return api.ErrInvalidRequest
+		}
+	}
+
 	songs, total, err := i.songService.Songs(c.Request().Context(), model.SongFilter{
-		Group: params.Group,
-		Song:  params.Song,
+		Group:       params.Group,
+		Song:        params.Song,
+		ReleaseDate: releaseDate,
+		Link:        params.Link,
+		Verse:       params.Verse,
 	}, model.Pagination{
 		Limit:  params.Limit,
 		Offset: params.Offset,
