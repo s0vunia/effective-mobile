@@ -30,16 +30,16 @@ INSERT INTO songs (group_id, title, release_date, link, created_at, updated_at) 
 
 INSERT INTO verses (song_id, verse_number, text, created_at, updated_at) VALUES
     -- Supermassive Black Hole
-    ((SELECT id FROM songs WHERE title = 'Supermassive Black Hole'), 1, 'Ooh baby, don''t you know I suffer?\nOh baby, can you hear me moan?\nYou caught me under false pretenses\nHow long before you let me go?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-    ((SELECT id FROM songs WHERE title = 'Supermassive Black Hole'), 2, 'You set my soul alight\nYou set my soul alight\nGlaciers melting in the dead of night\nAnd the superstars sucked into the supermassive', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ((SELECT id FROM songs WHERE title = 'Supermassive Black Hole'), 1, 'Ooh baby, don''t you know I suffer?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ((SELECT id FROM songs WHERE title = 'Supermassive Black Hole'), 2, 'You set my soul alight', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     
     -- Bohemian Rhapsody
-    ((SELECT id FROM songs WHERE title = 'Bohemian Rhapsody'), 1, 'Is this the real life?\nIs this just fantasy?\nCaught in a landslide\nNo escape from reality', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-    ((SELECT id FROM songs WHERE title = 'Bohemian Rhapsody'), 2, 'Open your eyes\nLook up to the skies and see\nI''m just a poor boy, I need no sympathy\nBecause I''m easy come, easy go\nLittle high, little low', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ((SELECT id FROM songs WHERE title = 'Bohemian Rhapsody'), 1, 'Is this the real life?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ((SELECT id FROM songs WHERE title = 'Bohemian Rhapsody'), 2, 'Open your eyes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     
     -- Wish You Were Here
-    ((SELECT id FROM songs WHERE title = 'Wish You Were Here'), 1, 'So, so you think you can tell\nHeaven from hell?\nBlue skies from pain?\nCan you tell a green field\nFrom a cold steel rail?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-    ((SELECT id FROM songs WHERE title = 'Wish You Were Here'), 2, 'A smile from a veil?\nDo you think you can tell?\nDid they get you to trade\nYour heroes for ghosts?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+    ((SELECT id FROM songs WHERE title = 'Wish You Were Here'), 1, 'So, so you think you can tell', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ((SELECT id FROM songs WHERE title = 'Wish You Were Here'), 2, 'A smile from a veil?', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- +goose StatementEnd
 
