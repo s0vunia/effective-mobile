@@ -3,6 +3,7 @@ package songs
 import (
 	"errors"
 	"net/http"
+	"time"
 
 	"github.com/labstack/echo/v4"
 	"github.com/s0vunia/effective-mobile/internal/api"
@@ -48,11 +49,16 @@ func (i *Implementation) Create(c echo.Context) error {
 			Text:        v.Text,
 		}
 	}
+	releaseDate, err := time.Parse("2006-01-02", req.ReleaseDate)
+	if err != nil {
+		logger.Error("Invalid release date format", zap.Error(err))
+		return api.ErrInvalidRequest
+	}
 
 	songID, err := i.songService.Add(c.Request().Context(), model.SongCreate{
 		GroupTitle:  req.GroupTitle,
 		Title:       req.Title,
-		ReleaseDate: req.ReleaseDate,
+		ReleaseDate: releaseDate,
 		Link:        req.Link,
 		Verses:      verses,
 	})

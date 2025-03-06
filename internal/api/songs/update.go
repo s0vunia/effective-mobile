@@ -4,6 +4,7 @@ import (
 	"errors"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/labstack/echo/v4"
 	"github.com/s0vunia/effective-mobile/internal/api"
@@ -60,7 +61,12 @@ func (i *Implementation) Update(c echo.Context) error {
 		updateInput.Title = req.Title
 	}
 	if req.ReleaseDate != nil {
-		updateInput.ReleaseDate = req.ReleaseDate
+		releaseDate, err := time.Parse("2006-01-02", *req.ReleaseDate)
+		if err != nil {
+			logger.Error("Invalid release date format", zap.Error(err))
+			return api.ErrInvalidRequest
+		}
+		updateInput.ReleaseDate = &releaseDate
 	}
 	if req.Link != nil {
 		updateInput.Link = req.Link

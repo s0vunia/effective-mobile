@@ -5,17 +5,17 @@ import "time"
 type CreateSongRequest struct {
 	GroupTitle  string       `json:"group_title" validate:"required,min=1,max=255"`
 	Title       string       `json:"title" validate:"required,min=1,max=255"`
-	ReleaseDate time.Time    `json:"release_date"`
+	ReleaseDate string       `json:"release_date" `
 	Link        string       `json:"link" validate:"omitempty,url"`
 	Verses      []VerseInput `json:"verses" validate:"dive"`
 }
 
 type UpdateSongRequest struct {
-	GroupID     *int64     `json:"group_id"`
-	GroupTitle  *string    `json:"group_title" validate:"omitempty,min=1,max=255"`
-	Title       *string    `json:"title" validate:"omitempty,min=1,max=255"`
-	ReleaseDate *time.Time `json:"release_date"`
-	Link        *string    `json:"link" validate:"omitempty,url"`
+	GroupID     *int64  `json:"group_id"`
+	GroupTitle  *string `json:"group_title" validate:"omitempty,min=1,max=255"`
+	Title       *string `json:"title" validate:"omitempty,min=1,max=255"`
+	ReleaseDate *string `json:"release_date"`
+	Link        *string `json:"link" validate:"omitempty,url"`
 }
 
 type LibraryParams struct {
