@@ -24,6 +24,8 @@ make local-docker-compose-up
 docker compose up --build -d
 ```
 
+4. [swagger.json](./api/swagger/swagger.json) / [swagger.yaml](./api/swagger/swagger.yaml) - Swagger-документация
+
 ## Технологии и инструменты
 - Go 1.23, Echo
 - PostgreSQL с Goose для миграций
