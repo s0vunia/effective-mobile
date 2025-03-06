@@ -14,6 +14,8 @@ CREATE TABLE songs (
 
 CREATE INDEX idx_songs_group_id ON songs(group_id);
 CREATE INDEX idx_songs_title ON songs(title);
+CREATE INDEX idx_songs_release_date ON songs(release_date);
+CREATE INDEX idx_songs_link ON songs(link);
 
 -- +goose Down
 -- +goose StatementBegin

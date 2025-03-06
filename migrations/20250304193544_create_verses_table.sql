@@ -13,6 +13,7 @@ CREATE TABLE verses (
 
 CREATE INDEX idx_verses_song_id ON verses(song_id);
 CREATE INDEX idx_verses_verse_number ON verses(verse_number);
+CREATE INDEX idx_verses_text ON verses(text);
 
 -- +goose Down
 -- +goose StatementBegin
