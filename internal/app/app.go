@@ -46,6 +46,8 @@ func NewApp(ctx context.Context) (*App, error) {
 }
 
 func (a *App) Run(ctx context.Context) error {
+	logger.Debug("Starting the application...")
+
 	defer func() {
 		closer.CloseAll()
 		closer.Wait()
@@ -69,7 +71,7 @@ func (a *App) Run(ctx context.Context) error {
 	}()
 
 	wg.Wait()
-
+	logger.Debug("Application has finished running.")
 	return nil
 }
 
