@@ -28,18 +28,14 @@ type serviceProvider struct {
 	httpConfig   config.HTTPConfig
 	loggerConfig config.LoggerConfig
 
-	dbClient  db.Client
-	txManager db.TxManager
+	dbClient db.Client
 
-	// Repositories
 	songRepository  repository.SongRepository
 	groupRepository repository.GroupRepository
 	verseRepository repository.VerseRepository
 
-	// Services
 	songService service.SongService
 
-	// API Implementations
 	songImpl *songs.Implementation
 }
 
