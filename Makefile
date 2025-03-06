@@ -10,6 +10,9 @@ install-deps:
 local-docker-compose-up:
 	sudo docker compose up --build -d
 
+local-docker-compose-down:
+	sudo docker compose down
+
 swagger-gen:
 	swag init -g internal/api/songs/service.go -o api/swagger
 
