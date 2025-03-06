@@ -42,6 +42,24 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
+                        "type": "string",
+                        "description": "Фильтр по дате выпуска",
+                        "name": "release_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Фильтр по ссылке",
+                        "name": "link",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Фильтр по куплету",
+                        "name": "verse",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "description": "Количество записей на странице (по умолчанию 10)",
                         "name": "limit",
@@ -203,8 +221,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "204": {
-                        "description": "No Content"
+                    "200": {
+                        "description": "OK"
                     },
                     "400": {
                         "description": "Неверный запрос",

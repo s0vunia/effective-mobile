@@ -122,6 +122,18 @@ paths:
         in: query
         name: song
         type: string
+      - description: Фильтр по дате выпуска
+        in: query
+        name: release_date
+        type: string
+      - description: Фильтр по ссылке
+        in: query
+        name: link
+        type: string
+      - description: Фильтр по куплету
+        in: query
+        name: verse
+        type: string
       - description: Количество записей на странице (по умолчанию 10)
         in: query
         name: limit
@@ -195,8 +207,8 @@ paths:
       produces:
       - application/json
       responses:
-        "204":
-          description: No Content
+        "200":
+          description: OK
         "400":
           description: Неверный запрос
           schema:
