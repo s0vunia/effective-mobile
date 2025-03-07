@@ -39,7 +39,7 @@ func (i *Implementation) Create(c echo.Context) error {
 
 	if err := c.Validate(&req); err != nil {
 		logger.Error("Validation failed", zap.Error(err))
-		return api.ErrInvalidRequest
+		return api.ValidationError(err)
 	}
 
 	verses := make([]model.Verse, len(req.Verses))
@@ -52,7 +52,7 @@ func (i *Implementation) Create(c echo.Context) error {
 	releaseDate, err := time.Parse("2006-01-02", req.ReleaseDate)
 	if err != nil {
 		logger.Error("Invalid release date format", zap.Error(err))
-		return api.ErrInvalidRequest
+		return api.ValidationError(err)
 	}
 
 	songID, err := i.songService.Add(c.Request().Context(), model.SongCreate{

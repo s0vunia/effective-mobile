@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -17,3 +18,7 @@ var (
 	ErrGroupNotFound  = echo.NewHTTPError(http.StatusNotFound, "group not found")
 	ErrSongNotFound   = echo.NewHTTPError(http.StatusNotFound, "song not found")
 )
+
+func ValidationError(err error) error {
+	return echo.NewHTTPError(http.StatusBadRequest, fmt.Errorf("validation error: %s", err.Error()))
+}

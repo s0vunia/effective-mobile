@@ -38,7 +38,7 @@ func (i *Implementation) Library(c echo.Context) error {
 	}
 
 	if err := c.Validate(&params); err != nil {
-		return api.ErrInvalidRequest
+		return api.ValidationError(err)
 	}
 
 	if params.Limit == 0 {
@@ -52,7 +52,7 @@ func (i *Implementation) Library(c echo.Context) error {
 		releaseDate, err = time.Parse("2006-01-02", params.ReleaseDate)
 		if err != nil {
 			logger.Error("Invalid release date format", zap.Error(err))
-			return api.ErrInvalidRequest
+			return api.ValidationError(err)
 		}
 	}
 

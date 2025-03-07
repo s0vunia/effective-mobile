@@ -46,7 +46,7 @@ func (i *Implementation) Update(c echo.Context) error {
 	}
 
 	if err := c.Validate(&req); err != nil {
-		return api.ErrInvalidRequest
+		return api.ValidationError(err)
 	}
 
 	updateInput := model.SongUpdate{}
@@ -64,7 +64,7 @@ func (i *Implementation) Update(c echo.Context) error {
 		releaseDate, err := time.Parse("2006-01-02", *req.ReleaseDate)
 		if err != nil {
 			logger.Error("Invalid release date format", zap.Error(err))
-			return api.ErrInvalidRequest
+			return api.ValidationError(err)
 		}
 		updateInput.ReleaseDate = &releaseDate
 	}

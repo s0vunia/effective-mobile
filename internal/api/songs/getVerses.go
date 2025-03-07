@@ -42,7 +42,7 @@ func (i *Implementation) GetVerses(c echo.Context) error {
 	}
 
 	if err := c.Validate(&params); err != nil {
-		return api.ErrInvalidRequest
+		return api.ValidationError(err)
 	}
 
 	if params.Limit == 0 {
